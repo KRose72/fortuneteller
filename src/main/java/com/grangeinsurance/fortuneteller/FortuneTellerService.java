@@ -1,5 +1,7 @@
 package com.grangeinsurance.fortuneteller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -8,35 +10,34 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 public class FortuneTellerService {
-
-	@Value("${works}")
-	private String works;
 	
 	@Value("${fortunesAPI}")
 	String fortunesAPI;
-	
-	public String testMethod() {
-		return fortunesAPI;
-	}
+	//String fortunesAPI = "http://localhost:8080/fortunes/random";
 	
 	public static final String TELLER_SERVICE = "tellerService";
+	static final String DEFAULT_FORTUNE = "\"You've met with a terrible fate, haven't you?\"";
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(FortuneTellerService.class);
 	
 	@CircuitBreaker(name = TELLER_SERVICE, fallbackMethod = "getFallbackFortune")
 	public String findMyFate() {
 		
 		RestTemplate restTemplate = new RestTemplate();
+		System.out.println("uri = '" + fortunesAPI + "'");
 	    String result = restTemplate.getForObject(fortunesAPI, String.class);
 		
 		if (result != null) {
 		    String[] fortuneData = result.replaceAll("[\\[\\](){}]", "").split(":");
 		    return fortuneData[1];
 		} else {
-			return "You are fated to find out another day...";
+			return DEFAULT_FORTUNE;
 		}
 	    
 	}
 	
 	public String getFallbackFortune(Exception e) {
-		return "\"You've met with a terrible fate, haven't you?\"";
+		LOGGER.error("An exception was thrown!", e);
+		return DEFAULT_FORTUNE;
 	}
 }

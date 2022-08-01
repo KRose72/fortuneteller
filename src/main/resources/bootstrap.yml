@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: fortuneteller
+
+server:
+  port: 8081

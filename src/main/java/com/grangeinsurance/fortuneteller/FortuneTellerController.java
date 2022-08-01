@@ -10,11 +10,6 @@ private FortuneTellerService service;
 	
 	public FortuneTellerController(FortuneTellerService service) { this.service= service;	}
 	
-	@GetMapping("/test")
-	public String testMethod() {
-		return service.testMethod();
-	}
-	
 	@GetMapping("/findmyfate")
 	public String findMyFateMethod() {
 		return service.findMyFate();
