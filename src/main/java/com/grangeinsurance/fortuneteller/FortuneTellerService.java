@@ -13,7 +13,6 @@ public class FortuneTellerService {
 	
 	@Value("${fortunesAPI}")
 	String fortunesAPI;
-	//String fortunesAPI = "http://localhost:8080/fortunes/random";
 	
 	public static final String TELLER_SERVICE = "tellerService";
 	static final String DEFAULT_FORTUNE = "\"You've met with a terrible fate, haven't you?\"";
@@ -24,7 +23,6 @@ public class FortuneTellerService {
 	public String findMyFate() {
 		
 		RestTemplate restTemplate = new RestTemplate();
-		System.out.println("uri = '" + fortunesAPI + "'");
 	    String result = restTemplate.getForObject(fortunesAPI, String.class);
 		
 		if (result != null) {

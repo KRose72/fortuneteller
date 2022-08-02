@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @SpringBootTest
 class FortuneTellerServiceTest {
@@ -24,6 +25,7 @@ class FortuneTellerServiceTest {
 	@Test
 	void serviceReturnsRandomFortune() {
 		final String expected = "Test";
+		ReflectionTestUtils.setField(subject, "fortunesAPI", "http://localhost:8080/fortunes/random");
 		
 		String response = subject.findMyFate();
 		assertThat(url).isEqualTo(subject.fortunesAPI);
