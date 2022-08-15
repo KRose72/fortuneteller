@@ -29,7 +29,7 @@ class FortuneTellerServiceTest {
 	
 	@BeforeEach
 	void setup() {
-		subject = new FortuneTellerService();
+		subject = new FortuneTellerService(restTemplate);
 		circuitBreakerRegistry.circuitBreaker("tellerService").reset();
 	}
 	

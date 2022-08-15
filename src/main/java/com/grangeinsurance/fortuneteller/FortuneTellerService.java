@@ -11,6 +11,12 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @Service
 public class FortuneTellerService {
 	
+	RestTemplate restTemplate;
+	
+	FortuneTellerService (RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+	
 	@Value("${fortunesAPI}")
 	String fortunesAPI;
 	
@@ -22,7 +28,6 @@ public class FortuneTellerService {
 	@CircuitBreaker(name = TELLER_SERVICE, fallbackMethod = "getFallbackFortune")
 	public String findMyFate() {
 		
-		RestTemplate restTemplate = new RestTemplate();
 	    String result = restTemplate.getForObject(fortunesAPI, String.class);
 		
 		if (result != null) {

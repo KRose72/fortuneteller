@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootTest
@@ -21,6 +22,9 @@ class FortuneTellerApplicationTest {
 	@Autowired
 	ApplicationContext context;
 	
+	private FortunetellerApplication subject;
+
+	
 	@Test
 	void springApplicationMethodIsInvolkedOneceByMain() {
 		try (MockedStatic<SpringApplication> mockSpringApplication = Mockito.mockStatic(SpringApplication.class)) {
@@ -29,6 +33,17 @@ class FortuneTellerApplicationTest {
 			mockSpringApplication.verify(() -> SpringApplication.run(FortunetellerApplication.class, new String[] {}), times(1));
 		}
 		
+	}
+	
+	@Test
+	void restTemplateIsReturned () {
+		subject = new FortunetellerApplication();
+		assertThat(subject.restTemplate()).hasSameClassAs(new RestTemplate());
+	}
+	
+	@Test
+	void contextLoadsBean() {
+		assertThat(context.getBean("restTempBean")).isNotNull();
 	}
 	
 	@Test
