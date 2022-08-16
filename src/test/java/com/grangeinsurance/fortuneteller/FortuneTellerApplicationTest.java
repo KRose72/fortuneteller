@@ -43,7 +43,7 @@ class FortuneTellerApplicationTest {
 	
 	@Test
 	void contextLoadsBean() {
-		assertThat(context.getBean("restTempBean")).isNotNull();
+		assertThat(context.getBean(RestTemplate.class)).isNotNull();
 	}
 	
 	@Test

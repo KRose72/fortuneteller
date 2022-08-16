@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class FortunetellerApplication {
 
-	@Bean("restTempBean")
+	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
